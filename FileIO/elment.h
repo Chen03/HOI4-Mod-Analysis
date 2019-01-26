@@ -9,19 +9,66 @@ using std::pair;
 #ifndef ELM
 #define ELM
 
-class elm{
+//语句
+namespace elm
+{
 
-protected:
+    class stat{
 
-    vector<pair<string,string> > li;
-    vector<pair<string,elm> > chi;
+    protected:
+        string key;
 
-public:
+    public:
+        string getKey(){return key;}
+        virtual bool isExpr(){return false;};
+    };
 
-    // string getName();
-    string toString(int);
-    void insert(string key,string val);
-    void insert(string key,elm val);
-};
+    //表达式: a = b \ a > b
+    class expr:public stat{
+
+    protected:
+        string val;
+        char oper;
+        
+    public:
+        expr(string,string);
+        expr(string,string,char);
+
+        char getOper(){return oper;}
+        bool isExpr(){return true;}
+        string getVal(){return val;}
+    };
+
+    //代码块: a = { b = c }
+    class bloc:public stat{
+
+    protected:
+        vector<stat*> li;
+        
+    public:
+        bloc(){}
+        bloc(string);
+
+        bool isExpr(){return false;}
+        string toString(int);
+        void insert(string key,string val);
+        void insert(string key,string val,char oper);
+        void insert(bloc val);
+    };
+
+} // ele
+// class elm{
+
+// protected:
+
+//     vector<stat> li;
+
+// public:
+
+//     // string getName();
+//     string toString(int);
+//     void insert(string key,string val);
+//     void insert(string key,elm val);
+// };
 
 #endif

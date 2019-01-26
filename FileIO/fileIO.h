@@ -3,6 +3,7 @@
 #include"elment.h"
 
 using std::string;
+using namespace elm;
 
 namespace IO
 {
@@ -32,9 +33,10 @@ public:
 class file:public nod{
 
     std::ifstream filePt;
-    elm cont;
+    bloc cont;
 
-    elm readElm(IO::err &tag);
+    bloc readElm(string name,IO::err &tag);
+    int getNext(char *ou,int n,...);
 
 public:
 
@@ -47,7 +49,7 @@ public:
     IO::err open(string name);
     IO::err init();
 
-    elm getElment();
+    bloc getElment();
 };
 
 class fold:public nod{
