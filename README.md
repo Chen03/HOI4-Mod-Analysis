@@ -2,6 +2,8 @@
 Discarded
 
 - [ ] File IO System
-  - [x] File\Folder\Node Class
+  - [x] File\Folder\Elements Class
+  - [x] Print Method
+  - [ ] Mod Loadding
 - [ ] Graphics System
 - [ ] Plugins System
