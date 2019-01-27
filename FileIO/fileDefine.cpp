@@ -8,6 +8,7 @@
 using namespace IO;
 using namespace std;
 using namespace elm;
+namespace fs = std::filesystem;
 
 /*
 void file::init(){
@@ -15,16 +16,25 @@ void file::init(){
 }
 */
 
+//NOD
+void nod::setPath(fs::path cur){
+    dir=cur;
+    if(fs::is_directory(dir)==isFile()) state=sta::Error;
+    state=sta::UnOpen;
+}
+
+bool nod::good(){
+    return state==sta::Ready;
+}
+
 //FILE
 file::file(){
     state=sta::NoFile;
 }
 
 //赋值的dir
-file::file(string name){
-    dir=std::filesystem::path(name);
-    state=IO::sta::UnOpen;
-
+file::file(fs::path name){
+    setPath(name);
     // if(open(name)==err::FailOpen)    state=sta::Error;
     // else if(init()!=err::Success)   state=sta::Error;
     // else state=sta::Ready;
@@ -42,9 +52,10 @@ err file::init(){
     if(state==sta::NoFile)  return err::NoLoadedFile;
     //TODO: read file and create 'elm'
     err tag=err::Success;
-    cont=readElm("",tag);
+    cont=readElm("ROOT",tag);
     //TODO: More Visiable Warnings
     if(tag==err::ErrFormat) printf("ERROR FORMAT!\n");
+    else state=sta::Ready;
     return tag;
 }
 

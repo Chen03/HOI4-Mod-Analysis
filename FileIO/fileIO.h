@@ -30,7 +30,7 @@ public:
     string getName();
     virtual bool isFile()=0;
 
-    void setPath(string name);
+    void setPath(std::filesystem::path);
     virtual IO::err open()=0;
     virtual IO::err init()=0;
 };
@@ -46,10 +46,9 @@ class file:public nod{
 public:
 
     file();
-    file(string name);
+    file(std::filesystem::path);
 
     //Overwrite nod
-    bool good();
     bool isFile(){return true;}
 
     IO::err open();
@@ -60,11 +59,17 @@ public:
 
 class fold:public nod{
 
-    vector<nod> li;
+    vector<nod*> li;
 
     public:
+
+    fold();
+    fold(std::filesystem::path);
+    ~fold();
 
     bool isFile(){return false;}
     IO::err open();
     IO::err init();
+
+    vector<nod*>::const_iterator getIter();
 };

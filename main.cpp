@@ -1,19 +1,13 @@
 #include<iostream>
 #include<fstream>
-#include"FileIO\fileIO.h"
-#include"FileIO\elment.h"
+#include<filesystem>
 
-using std::ofstream;
+using namespace std;
 
 int main(){
-    ofstream out;
-    out.open("test.out");
-    file a;
-    IO::err tag=IO::err::Success;
-    tag=a.open("1.in");
-    if(tag!=IO::err::Success)   printf("OPEN FAILED.");
-    tag=a.init();
-    bloc tmp = a.getElment();
-    out<<tmp.toString(0);
+    // ofstream out;
+    // out.open("test.out");
+    // std::filesystem::path a;
+    // a.open()
     return 0;
 }
