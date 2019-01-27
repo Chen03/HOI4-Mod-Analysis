@@ -1,14 +1,17 @@
 #include<string>
 #include<fstream>
+#include<vector>
+#include<filesystem>
 #include"elment.h"
 
+using std::vector;
 using std::string;
 using namespace elm;
 
 namespace IO
 {
     enum err{NoLoadedFile,FailOpen,Success,ErrFormat};
-    enum sta{NoFile,UnInit,Error,Ready};
+    enum sta{NoFile,UnOpen,UnInit,Error,Ready};
 } // IO
 
 
@@ -16,7 +19,7 @@ class nod{
 
 protected:
 
-    string name;
+    std::filesystem::path dir;
     IO::sta state;
 
 public:
@@ -24,9 +27,11 @@ public:
     //Condition
     bool good();
 
-    string getName(){return name;}
-    virtual IO::err open(string name)=0;
+    string getName();
     virtual bool isFile()=0;
+
+    void setPath(string name);
+    virtual IO::err open()=0;
     virtual IO::err init()=0;
 };
 
@@ -46,13 +51,20 @@ public:
     //Overwrite nod
     bool good();
     bool isFile(){return true;}
-    IO::err open(string name);
+
+    IO::err open();
     IO::err init();
 
     bloc getElment();
 };
 
 class fold:public nod{
+
+    vector<nod> li;
+
     public:
+
     bool isFile(){return false;}
+    IO::err open();
+    IO::err init();
 };

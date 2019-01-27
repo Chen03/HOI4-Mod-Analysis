@@ -2,6 +2,7 @@
 #include<iostream>
 #include<fstream>
 #include<limits>
+#include<filesystem>
 #include "fileIO.h"
 
 using namespace IO;
@@ -19,18 +20,19 @@ file::file(){
     state=sta::NoFile;
 }
 
+//赋值的dir
 file::file(string name){
-    if(open(name)==err::FailOpen)    state=sta::Error;
-    else if(init()!=err::Success)   state=sta::Error;
-    else state=sta::Ready;
+    dir=std::filesystem::path(name);
+    state=IO::sta::UnOpen;
+
+    // if(open(name)==err::FailOpen)    state=sta::Error;
+    // else if(init()!=err::Success)   state=sta::Error;
+    // else state=sta::Ready;
 }
 
-err file::open(string name){
-
+err file::open(){
     //TODO: substring the file name
-    this->name=name;
-
-    filePt.open(name);
+    filePt.open(dir);
     if(!filePt.good())    return err::FailOpen;
     state=sta::UnInit;
     return err::Success;

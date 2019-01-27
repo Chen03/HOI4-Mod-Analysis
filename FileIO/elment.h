@@ -48,12 +48,14 @@ namespace elm
     public:
         bloc(){}
         bloc(string);
+        ~bloc();
 
         bool isExpr(){return false;}
         string toString(int);
         void insert(string key,string val);
         void insert(string key,string val,char oper);
         void insert(bloc val);
+
     };
 
 } // ele
